@@ -30,6 +30,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
+                "rust_analyzer",
                 "r_language_server",
             },
             handlers = {
@@ -134,5 +135,7 @@ return {
                 })
             end,
         })
+
+        vim.lsp.inlay_hint.enable(true)
     end
 }

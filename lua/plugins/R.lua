@@ -3,6 +3,14 @@ return {
     lazy = false,
     config = function()
         -- Create a table with the options to be passed to setup()
+        local R_app
+        if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+            R_app = "radian.exe"
+        else
+            R_app = "radian"
+        end
+
+
         local opts = {
             hook = {
                 on_filetype = function()
@@ -11,8 +19,8 @@ return {
                     vim.api.nvim_buf_set_keymap(0, "n", "<Leader>rtl", "<Plug>RSendAboveLines", {})
                 end
             },
+            R_app = R_app,
             R_args = { "--quiet", "--no-save" },
-            R_app = "radian.exe",
             min_editor_width = 120,
             bracketed_paste = true,
             rconsole_width = 120,

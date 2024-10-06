@@ -11,7 +11,8 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.linebreak = true
 
 vim.opt.hidden = true
 
@@ -24,7 +25,7 @@ vim.opt.splitright = true
 -- syncronizes system clipboard with nvim clipboard
 vim.opt.clipboard = "unnamedplus"
 
-vim.opt.scrolloff = 999
+vim.opt.scrolloff = 10
 
 vim.opt.virtualedit = "block"
 
