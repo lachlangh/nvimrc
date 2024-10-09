@@ -58,12 +58,14 @@ return {
                     local lspconfig = require("lspconfig")
                     lspconfig.r_language_server.setup {
                         capabilities = capabilities,
-                        on_attach = function(_, bufnr)
+                        on_attach    = function(_, bufnr)
                             -- Set up indentation to 2 spaces
                             vim.api.nvim_buf_set_option(bufnr, "shiftwidth", 2)
                             vim.api.nvim_buf_set_option(bufnr, "tabstop", 2)
                             vim.api.nvim_buf_set_option(bufnr, "expandtab", true)
                         end,
+                        settings     = { r = { lsp = { debug = false } }
+                        },
                     }
                 end
             }
