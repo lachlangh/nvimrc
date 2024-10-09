@@ -13,6 +13,7 @@ return {
         "j-hui/fidget.nvim",
         "R-nvim/R.nvim",
         "R-nvim/cmp-r",
+        "onsails/lspkind.nvim",
     },
 
     config = function()
@@ -64,12 +65,21 @@ return {
                             vim.api.nvim_buf_set_option(bufnr, "tabstop", 2)
                             vim.api.nvim_buf_set_option(bufnr, "expandtab", true)
                         end,
+                        -- settings = {
+                        --     r = {
+                        --         lsp = {
+                        --             debug = true
+                        --         }
+                        --     }
+                        -- },
                     }
                 end
             }
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+        local lspkind = require('lspkind')
 
         cmp.setup({
             snippet = {
@@ -89,7 +99,10 @@ return {
                 { name = "cmp_r" },
             }, {
                 { name = 'buffer' },
-            })
+            }),
+            formatting = {
+                format = lspkind.cmp_format({})
+            }
         })
 
         require("cmp_r").setup({})
