@@ -21,9 +21,9 @@ return {
             },
             R_app = R_app,
             R_args = { "--quiet", "--no-save" },
-            min_editor_width = 120,
+            -- min_editor_width = 120,
             bracketed_paste = true,
-            rconsole_width = 120,
+            rconsole_width = 160,
             disable_cmds = {
                 "RClearConsole",
                 "RCustomStart",
