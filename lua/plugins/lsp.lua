@@ -28,12 +28,21 @@ return {
         require("fidget").setup({})
 
         require("mason").setup()
+
+        local ensure_installed = {
+            "lua_ls",
+            "rust_analyzer",
+        }
+
+        -- on work machine, the mason installation for R lsp requires powershell permissions that
+        -- I don't have, so I manually install it. On home machine let mason handle it for me
+        if not os.getenv("WORK") then
+            ensure_installed:append("r_language_server")
+        end
+
         require("mason-lspconfig").setup({
-            ensure_installed = {
-                "lua_ls",
-                "rust_analyzer",
-                "r_language_server",
-            },
+            ensure_installed = ensure_installed,
+
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
@@ -55,21 +64,32 @@ return {
                     }
                 end,
 
-                ["r_language_server"] = function()
+                ["pyright"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.r_language_server.setup {
+                    lspconfig.pyright.setup {
                         capabilities = capabilities,
-                        on_attach    = function(_, bufnr)
-                            -- Set up indentation to 2 spaces
-                            vim.api.nvim_buf_set_option(bufnr, "shiftwidth", 2)
-                            vim.api.nvim_buf_set_option(bufnr, "tabstop", 2)
-                            vim.api.nvim_buf_set_option(bufnr, "expandtab", true)
-                        end,
-                        settings     = { r = { lsp = { debug = false } } },
                     }
+                end,
+
+                ["r_language_server"] = function()
+                    if not os.getenv("WORK") then
+                        local lspconfig = require("lspconfig")
+                        lspconfig.r_language_server.setup {
+                            capabilities = capabilities,
+                            settings     = { r = { lsp = { debug = false } } },
+                        }
+                    end
                 end
             }
         })
+
+        if os.getenv("WORK") then
+            require("lspconfig").r_language_server.setup({
+                capabilities = capabilities,
+                settings     = { r = { lsp = { debug = false, rich_documentation = false } }
+                },
+            })
+        end
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
