@@ -14,6 +14,7 @@ return {
         "R-nvim/R.nvim",
         "R-nvim/cmp-r",
         "onsails/lspkind.nvim",
+        "hrsh7th/cmp-nvim-lua",
     },
 
     config = function()
@@ -67,8 +68,35 @@ return {
                         end,
                         settings     = { r = { lsp = { debug = false } } },
                     }
-                end
+                end,
+
+                ["rust_analyzer"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.rust_analyzer.setup {
+                        capabilities = capabilities,
+                        settings = {
+                            ["rust-analyzer"] = {
+                                imports = {
+                                    granularity = {
+                                        group = "module",
+                                    },
+                                    prefix = "self",
+                                },
+                                cargo = {
+                                    buildScripts = {
+                                        enable = true,
+                                    },
+                                },
+                                procMacro = {
+                                    enable = true
+                                },
+                            }
+                        }
+                    }
+                end,
+
             }
+
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -91,6 +119,7 @@ return {
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.
                 { name = "cmp_r" },
+                { name = 'nvim_lua' },
             }, {
                 { name = 'buffer' },
             }),
