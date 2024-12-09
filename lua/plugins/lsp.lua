@@ -189,8 +189,11 @@ return {
         -- Global LSP key mappings (on LSP attach)
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
-            callback = function(event)
-                local opts = { buffer = event.buf }
+            callback = function(args)
+                local opts = { buffer = args.buf }
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+                if not client then return end
 
                 vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
                 vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
@@ -202,17 +205,18 @@ return {
                 vim.keymap.set('n', '<leader>vrr', function() vim.lsp.buf.references() end, opts)
                 vim.keymap.set('n', '<leader>vrn', function() vim.lsp.buf.rename() end, opts)
                 vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
-                vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, opts)
 
-                -- auto format on save when attached to lsp server
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    -- 3
-                    buffer = event.buf,
-                    callback = function()
-                        -- 4 + 5
-                        vim.lsp.buf.format { async = false, id = event.data.client_id }
-                    end,
-                })
+                if client.supports_method('textDocument/formatting') then
+                    vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, opts)
+
+                    -- auto format on save when attached to lsp server
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        buffer = args.buf,
+                        callback = function()
+                            vim.lsp.buf.format { bufnr = args.buf, id = client.id }
+                        end,
+                    })
+                end
             end,
         })
 
