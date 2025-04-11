@@ -18,3 +18,7 @@ vim.api.nvim_set_keymap('t', '<A-h>', '<C-\\><C-N><C-w>h', { desc = "Navigate to
 vim.api.nvim_set_keymap('t', '<A-j>', '<C-\\><C-N><C-w>j', { desc = "Navigate to down a window in terminal mode" })
 vim.api.nvim_set_keymap('t', '<A-k>', '<C-\\><C-N><C-w>k', { desc = "Navigate to up a window in terminal mode" })
 vim.api.nvim_set_keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', { desc = "Navigate to the right window in terminal mode" })
+
+-- quickfix movements
+vim.keymap.set("n", "<leader>qn", "<Cmd>cnext<CR>", { desc = "Move to the next quickfix item" })
+vim.keymap.set("n", "<leader>qp", "<Cmd>cprev<CR>", { desc = "Move to the previous quickfix item" })

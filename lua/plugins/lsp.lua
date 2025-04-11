@@ -1,5 +1,6 @@
 return {
-    "neovim/nvim-lspconfig",
+
+        "neovim/nvim-lspconfig",
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
@@ -210,12 +211,18 @@ return {
                     vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, opts)
 
                     -- auto format on save when attached to lsp server
-                    vim.api.nvim_create_autocmd("BufWritePre", {
+                    local format_autocmd_id = vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = args.buf,
                         callback = function()
                             vim.lsp.buf.format { bufnr = args.buf, id = client.id }
                         end,
                     })
+
+
+                    vim.api.nvim_create_user_command("DisableFormatOnSave", function()
+                        vim.api.nvim_del_autocmd(format_autocmd_id)
+                        print("Disabled format on save for this session")
+                    end, {})
                 end
             end,
         })

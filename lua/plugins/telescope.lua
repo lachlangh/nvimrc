@@ -25,5 +25,6 @@ return {
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end, { desc = "Grep inside repo" })
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+        vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Telescope buffers" })
     end
 }
