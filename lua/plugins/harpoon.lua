@@ -9,7 +9,7 @@ return {
         harpoon:setup()
         -- REQUIRED
 
-        vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+        vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end)
         -- Toggle previous & next buffers stored within Harpoon list
         vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
         vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end)
