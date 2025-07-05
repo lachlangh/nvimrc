@@ -1,6 +1,6 @@
 return {
 
-        "neovim/nvim-lspconfig",
+    "neovim/nvim-lspconfig",
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
@@ -144,6 +144,11 @@ return {
             })
         end
 
+        require("lspconfig").emmet_ls.setup({
+            capabilities = capabilities,
+            filetypes = { "html", "css", },
+        })
+
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
         local lspkind = require('lspkind')
@@ -151,7 +156,28 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    local luasnip = require('luasnip')
+
+                    luasnip.config.set_config({
+                        history = true,
+                        updateevents = "TextChanged,TextChangedI",
+                    })
+
+                    luasnip.lsp_expand(args.body) -- For `luasnip` users.
+
+                    vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+                        if luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            vim.lsp.buf.signature_help()
+                        end
+                    end, { buffer = 0 })
+
+                    vim.keymap.set({ 'i', 's' }, '<C-j>', function()
+                        if luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        end
+                    end, { buffer = 0 })
                 end,
             },
             mapping = cmp.mapping.preset.insert({
