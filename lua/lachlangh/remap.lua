@@ -31,6 +31,25 @@ vim.keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window heig
 vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
 
+-- Splitting and creating terminals
+vim.keymap.set("n", "<leader>st", function()
+        vim.cmd("vsplit")
+        vim.cmd("terminal")
+        -- Set the terminal to insert mode
+        vim.cmd("startinsert")
+    end,
+    { desc = "Split window and open terminal" }
+)
+
+vim.keymap.set("n", "<leader>str", function()
+        vim.cmd("split")
+        vim.cmd("terminal radian")
+        -- Set the terminal to insert mode
+        vim.cmd("startinsert")
+    end,
+    { desc = "Split window and open radian terminal" }
+)
+
 -- Better indenting in visual mode
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
