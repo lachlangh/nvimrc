@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>vrn', function() vim.lsp.buf.rename() end, opts)
         vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
 
-        if client.supports_method('textDocument/formatting') then
+        if client:supports_method('textDocument/formatting') then
             vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, opts)
 
             -- auto format on save when attached to lsp server
