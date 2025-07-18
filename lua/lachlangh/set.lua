@@ -75,3 +75,5 @@ if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
     vim.opt.shellpipe =
     '| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record'
 end
+
+vim.diagnostic.config({ virtual_lines = { current_line = true, }, })
