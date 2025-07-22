@@ -42,7 +42,7 @@ vim.keymap.set("n", "<leader>st", function()
 )
 
 vim.keymap.set("n", "<leader>str", function()
-        vim.cmd("split")
+        vim.cmd("vsplit")
         vim.cmd("terminal radian")
         -- Set the terminal to insert mode
         vim.cmd("startinsert")
@@ -82,7 +82,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             local format_autocmd_id = vim.api.nvim_create_autocmd("BufWritePre", {
                 buffer = args.buf,
                 callback = function()
-                    vim.lsp.buf.format { bufnr = args.buf, id = client.id }
+                    vim.lsp.buf.format { bufnr = args.buf }
                 end,
             })
 
