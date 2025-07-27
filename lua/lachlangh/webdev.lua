@@ -18,3 +18,15 @@ vim.keymap.set("n", "<leader>tc", function()
     w.conceallevel = (w.conceallevel == 0) and 2 or 0
     vim.notify("conceallevel=" .. w.conceallevel, vim.log.levels.INFO, { title = "Conceal" })
 end, { desc = "Toggle conceallevel 0-2 (window-local)" })
+
+
+-- Set 2-space indent for JSX (javascriptreact) and TSX (typescriptreact)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "javascriptreact", "typescriptreact", "javascript", "typescript" },
+    callback = function()
+        vim.bo.shiftwidth = 2
+        vim.bo.tabstop = 2
+        vim.bo.softtabstop = 2
+        vim.bo.expandtab = true
+    end,
+})
