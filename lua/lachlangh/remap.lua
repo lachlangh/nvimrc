@@ -93,3 +93,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
     end,
 })
+
+
+
+-- State: store package name in Lua session
+local r_package_name = nil
+
+
+local function set_r_package_name()
+    if not r_package_name then
+        vim.ui.input({ prompt = "Enter R package name: " }, function(input)
+            if input and input ~= "" then
+                r_package_name = input
+                print("R package name set to: " .. r_package_name)
+            else
+                print("No package name set.")
+            end
+        end)
+    end
+end
+
+-- In terminal mode, send devtools::load_all("<package>")
+vim.keymap.set("t", "<leader>dev", function()
+    set_r_package_name()
+
+    if not r_package_name then
+        print("Invalid package name set")
+        return
+    end
+
+    local command = 'devtools::load_all("' .. r_package_name .. '")\n'
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command, true, false, true), 't', true)
+end, { desc = "Load stored package in R terminal" })

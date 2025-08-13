@@ -38,6 +38,29 @@ return {
             opts.auto_start = "on startup"
             opts.objbr_auto_start = true
         end
+
+
+        vim.api.nvim_create_user_command("RInstallNvimcom", function()
+            local plug_path = vim.fn.stdpath("data") .. "/lazy/R.nvim/nvimcom"
+            plug_path = vim.uv.fs_realpath(plug_path) or plug_path
+            local rpath = (plug_path or ""):gsub("\\", "/")
+
+            local expr = ([[if (!requireNamespace("pak", quietly=TRUE)) install.packages("pak"); pak::pak('local::%s')]])
+                :format(rpath)
+
+            vim.system({ "Rscript", "-e", expr }, { text = true }, function(res)
+                if res.code == 0 then
+                    vim.schedule(function()
+                        vim.notify("nvimcom installed successfully via pak", vim.log.levels.INFO)
+                    end)
+                else
+                    vim.schedule(function()
+                        vim.notify("nvimcom install failed:\n" .. (res.stderr or res.stdout or ""), vim.log.levels.ERROR)
+                    end)
+                end
+            end)
+        end, { desc = "Install the nvimcom R package" })
+
         require("r").setup(opts)
     end,
 }
