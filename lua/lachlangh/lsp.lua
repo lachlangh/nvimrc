@@ -7,4 +7,5 @@ vim.lsp.enable {
     "tsserver",
     "emmet_language_server",
     "prisma_language_server",
+    "python",
 }
