@@ -18,7 +18,14 @@ return {
         require('telescope').load_extension('ui-select')
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope all files" })
+        vim.keymap.set('n', '<leader>ff',
+            function()
+                builtin.find_files({
+                    find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+                    hidden = true,
+                })
+            end
+            , { desc = "Telescope all files" })
         vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = "Telescope git files" })
         vim.keymap.set('n', '<leader>pws', function()
             local word = vim.fn.expand("<cword>")

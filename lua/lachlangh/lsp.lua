@@ -6,4 +6,5 @@ vim.lsp.enable {
     "eslint",
     "tsserver",
     "emmet_language_server",
+    "prisma_language_server",
 }

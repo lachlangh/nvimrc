@@ -39,7 +39,6 @@ return {
             opts.objbr_auto_start = true
         end
 
-
         vim.api.nvim_create_user_command("RInstallNvimcom", function()
             local plug_path = vim.fn.stdpath("data") .. "/lazy/R.nvim/nvimcom"
             plug_path = vim.uv.fs_realpath(plug_path) or plug_path
