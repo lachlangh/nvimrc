@@ -126,6 +126,11 @@ vim.keymap.set("t", "<leader>dev", function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command, true, false, true), 't', true)
 end, { desc = "Load stored package in R terminal" })
 
+vim.api.nvim_create_user_command("SetRPackage", function()
+    r_package_name = nil
+    set_r_package_name()
+end, { desc = "Set the R package name for devtools::load_all()" })
+
 
 -- Run sql-formatter on the current buffer
 vim.api.nvim_create_user_command("SqlFormat", function()
