@@ -40,5 +40,13 @@ return {
         end, { desc = "Grep inside repo" })
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Telescope buffers" })
+
+        -- function to extract word under the cursor and search for 'word <- function' pattern
+        -- useful for finding function definitions where not supported by LSP
+        vim.keymap.set('n', '<leader>fd', function()
+            local word = vim.fn.expand("<cword>")
+            local pattern = word .. " <- function"
+            builtin.grep_string({ search = pattern })
+        end, { desc = "Find function definition" })
     end
 }
