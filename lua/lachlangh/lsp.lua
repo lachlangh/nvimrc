@@ -8,4 +8,5 @@ vim.lsp.enable {
     "emmet_language_server",
     "prisma_language_server",
     "python",
+    "clangd",
 }
