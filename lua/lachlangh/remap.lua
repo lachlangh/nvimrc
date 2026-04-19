@@ -114,7 +114,7 @@ local function set_r_package_name()
 end
 
 -- In terminal mode, send devtools::load_all("<package>")
-vim.keymap.set("t", "<leader>dev", function()
+vim.keymap.set("t", "<localleader>dev", function()
     set_r_package_name()
 
     if not r_package_name then

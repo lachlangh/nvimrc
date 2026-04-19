@@ -1,5 +1,6 @@
 return {
     "R-nvim/R.nvim",
+    version = "0.99.3",
     lazy = false,
     config = function()
         -- Create a table with the options to be passed to setup()

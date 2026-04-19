@@ -45,6 +45,43 @@ return {
         'typescript.tsx',
     },
     root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+    settings = {
+        typescript = {
+            inlayHints = {
+                -- 🔑 keep this ON (this is what you want)
+                includeInlayVariableTypeHints = true,
+
+                -- avoid noise when names already imply type
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+
+                -- only helpful parameter hints
+                includeInlayParameterNameHints = "literals",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+
+                -- usually redundant in TS if you annotate
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = false,
+
+                -- optional
+                includeInlayEnumMemberValueHints = false,
+            },
+        },
+        javascript = {
+            inlayHints = {
+                includeInlayParameterNameHints = "literals",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = false,
+                includeInlayEnumMemberValueHints = false,
+            },
+        },
+    },
     handlers = {
         -- handle rename request for certain code actions like extracting functions / types
         ['_typescript.rename'] = function(_, result, ctx)
