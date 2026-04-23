@@ -59,12 +59,12 @@ return {
                 includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 
                 -- usually redundant in TS if you annotate
-                includeInlayFunctionParameterTypeHints = false,
-                includeInlayFunctionLikeReturnTypeHints = false,
-                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
 
                 -- optional
-                includeInlayEnumMemberValueHints = false,
+                includeInlayEnumMemberValueHints = true,
             },
         },
         javascript = {
