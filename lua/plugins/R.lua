@@ -1,5 +1,6 @@
 return {
     "R-nvim/R.nvim",
+    enabled = true,
     version = "0.99.3",
     lazy = false,
     config = function()
